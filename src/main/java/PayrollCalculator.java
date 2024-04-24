@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.*;
 import java.util.regex.Pattern;
 
 public class PayrollCalculator
@@ -11,10 +12,14 @@ public class PayrollCalculator
         try
         {
             FileReader fileReader = new FileReader("src/main/resources/employees.csv");
-
             BufferedReader bufReader = new BufferedReader(fileReader);
+
+            FileWriter fileWriter = new FileWriter("src/main/resources/employeesGrossPay.csv");
+            BufferedWriter bufWriter = new BufferedWriter(fileWriter);
+
             bufReader.readLine();
             String input;
+
 
             while((input = bufReader.readLine()) != null)
             {
@@ -30,9 +35,11 @@ public class PayrollCalculator
 
                 System.out.printf("Employee ID: %d Name: %s GrossPay: %s \n", id, name, grossPay);
 
-            }
+                input = String.format(id + " | " + name + " | " + grossPay + "\n");
+                bufWriter.write(input);
 
-            bufReader.close();
+            }
+            bufWriter.close();
         }
         catch (IOException e)
         {
